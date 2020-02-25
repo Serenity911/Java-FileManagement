@@ -1,5 +1,7 @@
 package com.codeclan.example.fileManagement.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,21 +9,26 @@ import javax.persistence.*;
 public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long fileId;
+    private Long fileId;
 
     @Column
-    String name;
+    private String name;
 
     @Column
-    String extension;
+    private String extension;
 
     @Column
-    int kByteSize;
+    private int kByteSize;
 
-    @Column
-    String folder;
+    @JsonIgnoreProperties("files")
+    @ManyToOne
+    @JoinColumn(name = "folder_id", nullable = false)
+    private Folder folder;
 
-    public File(String name, String extension, int kByteSize, String folder) {
+
+
+
+    public File(String name, String extension, int kByteSize, Folder folder) {
         this.name = name;
         this.extension = extension;
         this.kByteSize = kByteSize;
@@ -60,11 +67,11 @@ public class File {
         this.kByteSize = kByteSize;
     }
 
-    public String getFolder() {
+    public Folder getFolder() {
         return folder;
     }
 
-    public void setFolder(String folder) {
+    public void setFolder(Folder folder) {
         this.folder = folder;
     }
 }
