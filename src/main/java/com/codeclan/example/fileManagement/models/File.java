@@ -26,7 +26,8 @@ public class File {
     private Folder folder;
 
 
-
+    public File() {
+    }
 
     public File(String name, String extension, int kByteSize, Folder folder) {
         this.name = name;
